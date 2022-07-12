@@ -73,6 +73,8 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         } else {
             textView.attributedText = richText
         }
+        textView.contentInset = UIEdgeInsetsMake(-7.0,0.0,0,0.0)
+
         textView.typingAttributes = [.font : defaultFont]
         textView.isEditable = true
         textView.isSelectable = true
