@@ -8,25 +8,28 @@ public struct RichTextEditor: View {
     @Binding var richText: NSMutableAttributedString
     private let placeholder: String
     private let accessorySections: Array<EditorSection>
-    var defaultFont: UIFont = UIFont.systemFont(ofSize: 24)
-    var defaultFontColor: Color = Color.white
+    var defaultFontSize = UIFont.systemFontSize
+    var defaultFontName = "AvenirNext-Regular"
+    var defaultFontColor = Color.white
     
     public init(
         richText: Binding<NSMutableAttributedString>,
         placeholder: String = "Type ...",
         accessory sections: Array<EditorSection> = EditorSection.allCases,
-        defaultFont: UIFont = UIFont.systemFont(ofSize: 24),
+        defaultFontName: String = "AvenirNext-Regular",
+        defaultFontSize: CGFloat = UIFont.systemFontSize,
         defaultFontColor: Color = Color.white
     ) {
         self._richText = richText
         self.placeholder = placeholder
         self.accessorySections = sections
-        self.defaultFont = defaultFont
+        self.defaultFontName = defaultFontName
+        self.defaultFontSize = defaultFontSize
         self.defaultFontColor = defaultFontColor
     }
     
     public var body: some View {
-        TextEditorWrapper(richText: $richText, height: $dynamicHeight, placeholder: placeholder, sections: accessorySections, defaultFont: defaultFont, defaultFontColor: defaultFontColor)
+        TextEditorWrapper(richText: $richText, height: $dynamicHeight, placeholder: placeholder, sections: accessorySections, defaultFontName: defaultFontName, defaultFontSize: defaultFontSize, defaultFontColor: defaultFontColor)
             .frame(minHeight: dynamicHeight, maxHeight: dynamicHeight)
     }
 }
