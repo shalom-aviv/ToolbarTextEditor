@@ -113,7 +113,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         var parent: TextEditorWrapper
         var defaultFontSize = UIFont.systemFontSize
         var defaultFontName = "AvenirNext-Regular"
-        var defaultFontColor = Color.white
+        var defaultFontColor = UIColor.white
         
         private var isBold = false
         private var isItalic = false
