@@ -34,7 +34,7 @@ struct RichTextEditor_Previews: PreviewProvider {
     }
     
     struct Preview: View {
-        let richText: NSMutableAttributedString = NSMutableAttributedString()
+        @State var richText: NSMutableAttributedString = NSMutableAttributedString()
         @State var text = NSAttributedString(string: "Hello")
         
         var body: some View {
@@ -42,7 +42,7 @@ struct RichTextEditor_Previews: PreviewProvider {
                 Color(hex: "EED6C4")
                     .edgesIgnoringSafeArea(.all)
                 VStack {
-                    RichTextEditor(richText: richText) { attributedString in
+                    RichTextEditor(richText: $richText) { attributedString in
                         self.text = attributedString
                     }
                     .padding()
