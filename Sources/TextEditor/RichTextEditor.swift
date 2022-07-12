@@ -51,7 +51,6 @@ struct RichTextEditor_Previews: PreviewProvider {
                             Rectangle().stroke(lineWidth: 1)
                         )
                         .padding()
-                    Text(text.string)
                 }
             }
         }
