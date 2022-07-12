@@ -359,6 +359,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
                 }
             }
             textView.scrollRangeToVisible(textView.selectedRange)
+            parent.onCommit(textView.attributedText)
         }
     }
 }
