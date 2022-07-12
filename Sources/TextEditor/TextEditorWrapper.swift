@@ -19,7 +19,8 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
     private let placeholder: String
     private let lineSpacing: CGFloat = 3
     private let hintColor = UIColor.placeholderText
-    var defaultFont = UIFont.systemFont(ofSize: 24)
+    var defaultFontSize = UIFont.systemFontSize
+    var defaultFontName = "AvenirNext-Regular"
     var defaultFontColor = Color.white
     
     // TODO: line width, line style
@@ -28,7 +29,8 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         height: Binding<CGFloat>,
         placeholder: String,
         sections: Array<EditorSection>,
-        defaultFont: UIFont = UIFont.systemFont(ofSize: 24),
+        defaultFontName: String = "AvenirNext-Regular",
+        defaultFontSize: CGFloat = UIFont.systemFontSize,
         defaultFontColor: Color = Color.white
     ) {
         self._richText = richText
@@ -37,7 +39,8 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         self.textView = UITextView()
         let rect = CGRect(x: 0, y: 0, width: 300, height: sections.contains(.color) ? 70 : 40)
         self.placeholder = placeholder
-        self.defaultFont = defaultFont
+        self.defaultFontName = defaultFontName
+        self.defaultFontSize = defaultFontSize
         self.defaultFontColor = defaultFontColor
         self.accessoryView = InputAccessoryView(frame: rect, inputViewStyle: .default, accessorySections: sections)
     }
@@ -102,7 +105,8 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
     
     class Coordinator: NSObject, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TextEditorDelegate {
         var parent: TextEditorWrapper
-        var defaultFont = UIFont.systemFont(ofSize: 24)
+        var defaultFontSize = UIFont.systemFontSize
+        var defaultFontName = "AvenirNext-Regular"
         var defaultFontColor = Color.white
         
         private var isBold = false
@@ -110,8 +114,9 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         
         init(_ parent: TextEditorWrapper) {
             self.parent = parent
-            self.defaultFont = parent.defaultFont
+            self.defaultFontName = parent.defaultFontName
             self.defaultFontColor = parent.defaultFontColor
+            self.defaultFontSize = parent.defaultFontSize
         }
         
         // MARK: - Image Picker
@@ -200,7 +205,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
             let attributes = parent.textView.selectedRange.isEmpty ? parent.textView.typingAttributes : selectedAttributes
             let fontSize = getFontSize(attributes: attributes)
             
-            fontName = name
+            defaultFontName = name
             let defaultFont = UIFont.systemFont(ofSize: fontSize)
             let newFont = UIFont(name: fontName, size: fontSize) ?? defaultFont
             textEffect(type: UIFont.self, key: .font, value: newFont, defaultValue: defaultFont)
