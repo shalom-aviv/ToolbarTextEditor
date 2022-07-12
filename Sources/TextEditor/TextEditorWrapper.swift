@@ -364,7 +364,8 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
                     self.parent.height = estimatedSize.height
                 }
             }
-            textView.scrollRangeToVisible(textView.selectedRange)
+            // textView.scrollRangeToVisible(textView.selectedRange)
+            
             textView.contentInset = UIEdgeInsets(top: 0, left: textView.contentInset.left, bottom: 0, right: textView.contentInset.right)
         }
     }
