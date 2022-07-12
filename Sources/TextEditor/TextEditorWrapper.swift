@@ -75,7 +75,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
             textView.attributedText = richText
         }
 
-        textView.textColor = defaultFontColor
+        //textView.textColor = defaultFontColor
         textView.typingAttributes = [.font : defaultFont]
         textView.isEditable = true
         textView.isSelectable = true
