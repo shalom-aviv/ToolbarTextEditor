@@ -94,8 +94,6 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
             textView.centerYAnchor.constraint(equalTo: controller.view.centerYAnchor),
             textView.widthAnchor.constraint(equalTo: controller.view.widthAnchor),
         ])
-
-        textView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
     }
     
     private func scaleImage(image: UIImage, maxWidth: CGFloat, maxHeight: CGFloat) -> UIImage {
