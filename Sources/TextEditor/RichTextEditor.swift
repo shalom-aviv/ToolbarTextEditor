@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 @available(iOS 13.0, *)
 public struct RichTextEditor: View {
@@ -7,22 +8,25 @@ public struct RichTextEditor: View {
     @Binding var richText: NSMutableAttributedString
     private let placeholder: String
     private let accessorySections: Array<EditorSection>
-    private let onCommit: (NSAttributedString) -> Void
+    var defaultFont: UIFont = UIFont.systemFont(ofSize: 24)
+    var defaultFontColor: Color = Color.white
     
     public init(
         richText: Binding<NSMutableAttributedString>,
         placeholder: String = "Type ...",
         accessory sections: Array<EditorSection> = EditorSection.allCases,
-        onCommit: @escaping ((NSAttributedString) -> Void)
+        defaultFont: UIFont = UIFont.systemFont(ofSize: 24),
+        defaultFontColor: Color = Color.white
     ) {
         self._richText = richText
         self.placeholder = placeholder
         self.accessorySections = sections
-        self.onCommit = onCommit
+        self.defaultFont = defaultFont
+        self.defaultFontColor = defaultFontColor
     }
     
     public var body: some View {
-        TextEditorWrapper(richText: $richText, height: $dynamicHeight, placeholder: placeholder, sections: accessorySections, onCommit: onCommit)
+        TextEditorWrapper(richText: $richText, height: $dynamicHeight, placeholder: placeholder, sections: accessorySections, defaultFont: defaultFont, defaultFontColor: defaultFontColor)
             .frame(minHeight: dynamicHeight, maxHeight: dynamicHeight)
     }
 }
@@ -35,21 +39,18 @@ struct RichTextEditor_Previews: PreviewProvider {
     
     struct Preview: View {
         @State var richText: NSMutableAttributedString = NSMutableAttributedString()
-        @State var text = NSAttributedString(string: "Hello")
         
         var body: some View {
             ZStack {
                 Color(hex: "EED6C4")
                     .edgesIgnoringSafeArea(.all)
                 VStack {
-                    RichTextEditor(richText: $richText) { attributedString in
-                        self.text = attributedString
-                    }
-                    .padding()
-                    .background(
-                        Rectangle().stroke(lineWidth: 1)
-                    )
-                    .padding()
+                    RichTextEditor(richText: $richText)
+                        .padding()
+                        .background(
+                            Rectangle().stroke(lineWidth: 1)
+                        )
+                        .padding()
                     Text(text.string)
                 }
             }

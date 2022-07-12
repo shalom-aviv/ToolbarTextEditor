@@ -19,13 +19,8 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
     private let placeholder: String
     private let lineSpacing: CGFloat = 3
     private let hintColor = UIColor.placeholderText
-    private let defaultFontSize = UIFont.systemFontSize
-    private let defaultFontName = "AvenirNext-Regular"
-    private let onCommit: ((NSAttributedString) -> Void)
-    
-    private var defaultFont: UIFont {
-        return UIFont(name: defaultFontName, size: defaultFontSize) ?? .systemFont(ofSize: defaultFontSize)
-    }
+    var defaultFont = UIFont.systemFont(ofSize: 24)
+    var defaultFontColor = Color.white
     
     // TODO: line width, line style
     init(
@@ -33,7 +28,8 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         height: Binding<CGFloat>,
         placeholder: String,
         sections: Array<EditorSection>,
-        onCommit: @escaping ((NSAttributedString) -> Void)
+        defaultFont: UIFont = UIFont.systemFont(ofSize: 24),
+        defaultFontColor: Color = Color.white
     ) {
         self._richText = richText
         self._height = height
@@ -41,8 +37,8 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         self.textView = UITextView()
         let rect = CGRect(x: 0, y: 0, width: 300, height: sections.contains(.color) ? 70 : 40)
         self.placeholder = placeholder
-        self.onCommit = onCommit
-        
+        self.defaultFont = defaultFont
+        self.defaultFontColor = defaultFontColor
         self.accessoryView = InputAccessoryView(frame: rect, inputViewStyle: .default, accessorySections: sections)
     }
     
@@ -71,6 +67,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
             textView.attributedText = richText
         }
         textView.typingAttributes = [.font : defaultFont]
+        textView.textColor(color: defaultFontColor)
         textView.isEditable = true
         textView.isSelectable = true
         textView.isScrollEnabled = false
@@ -105,14 +102,16 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
     
     class Coordinator: NSObject, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TextEditorDelegate {
         var parent: TextEditorWrapper
-        var fontName: String
+        var defaultFont = UIFont.systemFont(ofSize: 24)
+        var defaultFontColor = Color.white
         
         private var isBold = false
         private var isItalic = false
         
         init(_ parent: TextEditorWrapper) {
             self.parent = parent
-            self.fontName = parent.defaultFontName
+            self.defaultFont = parent.defaultFont
+            self.defaultFontColor = parent.defaultFontColor
         }
         
         // MARK: - Image Picker
@@ -342,8 +341,6 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         func textViewDidEndEditing(_ textView: UITextView) {
             if textView.attributedText.string == "" || textView.attributedText.string == parent.placeholder {
                 textView.attributedText = NSAttributedString(string: parent.placeholder)
-            } else {
-                parent.onCommit(textView.attributedText)
             }
         }
         
