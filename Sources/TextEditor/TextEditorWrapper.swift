@@ -9,7 +9,7 @@ import SwiftUI
 
 @available(iOS 13.0, *)
 final class TextEditorWrapper: UIViewControllerRepresentable {
-    private var richText: NSMutableAttributedString
+    @Binding var richText: NSMutableAttributedString
     @Binding private var height: CGFloat
     
     private var controller: UIViewController
@@ -29,13 +29,13 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
     
     // TODO: line width, line style
     init(
-        richText: NSMutableAttributedString,
+        richText: Binding<NSMutableAttributedString>,
         height: Binding<CGFloat>,
         placeholder: String,
         sections: Array<EditorSection>,
         onCommit: @escaping ((NSAttributedString) -> Void)
     ) {
-        self.richText = richText
+        self._richText = richText
         self._height = height
         self.controller = UIViewController()
         self.textView = UITextView()
@@ -359,7 +359,6 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
                 }
             }
             textView.scrollRangeToVisible(textView.selectedRange)
-            parent.onCommit(textView.attributedText)
         }
     }
 }
