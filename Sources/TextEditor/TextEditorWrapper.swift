@@ -188,7 +188,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         func adjustFontSize(isIncrease: Bool) {
             var font: UIFont
             
-            let maxFontSize: CGFloat = 18
+            let maxFontSize: CGFloat = 28
             let minFontSize: CGFloat = 10
             
             let attributes = parent.textView.selectedRange.isEmpty ? parent.textView.typingAttributes : selectedAttributes
@@ -345,7 +345,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         func textViewDidBeginEditing(_ textView: UITextView) {
             if textView.attributedText.string == parent.placeholder {
                 textView.attributedText = NSAttributedString(string: "")
-                textView.typingAttributes[.foregroundColor] = UIColor.black
+                textView.typingAttributes[.foregroundColor] = defaultFontColor
             }
         }
         
