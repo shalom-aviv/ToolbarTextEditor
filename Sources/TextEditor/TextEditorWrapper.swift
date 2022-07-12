@@ -22,6 +22,10 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
     var defaultFontSize = UIFont.systemFontSize
     var defaultFontName = "AvenirNext-Regular"
     var defaultFontColor = Color.white
+
+    private var defaultFont: UIFont {
+        return UIFont(name: defaultFontName, size: defaultFontSize) ?? .systemFont(ofSize: defaultFontSize)
+    }
     
     // TODO: line width, line style
     init(
@@ -69,7 +73,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         } else {
             textView.attributedText = richText
         }
-        textView.typingAttributes = [.font : defaultFontName]
+        textView.typingAttributes = [.font : defaultFont]
         textView.isEditable = true
         textView.isSelectable = true
         textView.isScrollEnabled = false
