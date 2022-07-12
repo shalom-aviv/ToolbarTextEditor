@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 @available(iOS 13.0, *)
 final class TextEditorWrapper: UIViewControllerRepresentable {
@@ -21,7 +22,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
     private let hintColor = UIColor.placeholderText
     var defaultFontSize = UIFont.systemFontSize
     var defaultFontName = "AvenirNext-Regular"
-    var defaultFontColor = Color.white
+    var defaultFontColor = UIColor.white
 
     private var defaultFont: UIFont {
         return UIFont(name: defaultFontName, size: defaultFontSize) ?? .systemFont(ofSize: defaultFontSize)
@@ -35,7 +36,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         sections: Array<EditorSection>,
         defaultFontName: String = "AvenirNext-Regular",
         defaultFontSize: CGFloat = UIFont.systemFontSize,
-        defaultFontColor: Color = Color.white
+        defaultFontColor: UIColor = UIColor.white
     ) {
         self._richText = richText
         self._height = height

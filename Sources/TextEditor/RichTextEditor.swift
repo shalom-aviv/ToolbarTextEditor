@@ -10,7 +10,7 @@ public struct RichTextEditor: View {
     private let accessorySections: Array<EditorSection>
     var defaultFontSize = UIFont.systemFontSize
     var defaultFontName = "AvenirNext-Regular"
-    var defaultFontColor = Color.white
+    var defaultFontColor = UIColor.white
     
     public init(
         richText: Binding<NSMutableAttributedString>,
@@ -18,7 +18,7 @@ public struct RichTextEditor: View {
         accessory sections: Array<EditorSection> = EditorSection.allCases,
         defaultFontName: String = "AvenirNext-Regular",
         defaultFontSize: CGFloat = UIFont.systemFontSize,
-        defaultFontColor: Color = Color.white
+        defaultFontColor: UIColor = UIColor.white
     ) {
         self._richText = richText
         self.placeholder = placeholder
