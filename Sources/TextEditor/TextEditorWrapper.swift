@@ -69,8 +69,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         } else {
             textView.attributedText = richText
         }
-        textView.typingAttributes = [.font : defaultFont]
-        textView.textColor(color: defaultFontColor)
+        textView.typingAttributes = [.font : defaultFontName]
         textView.isEditable = true
         textView.isSelectable = true
         textView.isScrollEnabled = false
@@ -207,7 +206,7 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
             
             defaultFontName = name
             let defaultFont = UIFont.systemFont(ofSize: fontSize)
-            let newFont = UIFont(name: fontName, size: fontSize) ?? defaultFont
+            let newFont = UIFont(name: defaultFontName, size: fontSize) ?? defaultFont
             textEffect(type: UIFont.self, key: .font, value: newFont, defaultValue: defaultFont)
         }
         
