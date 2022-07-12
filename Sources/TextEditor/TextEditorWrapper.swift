@@ -73,7 +73,6 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
         } else {
             textView.attributedText = richText
         }
-        textView.contentInset = UIEdgeInsets.init(top: -7.0, left: 0.0, bottom: 0.0, right: 0.0)
 
         textView.typingAttributes = [.font : defaultFont]
         textView.isEditable = true
@@ -95,6 +94,8 @@ final class TextEditorWrapper: UIViewControllerRepresentable {
             textView.centerYAnchor.constraint(equalTo: controller.view.centerYAnchor),
             textView.widthAnchor.constraint(equalTo: controller.view.widthAnchor),
         ])
+
+        textView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
     }
     
     private func scaleImage(image: UIImage, maxWidth: CGFloat, maxHeight: CGFloat) -> UIImage {
