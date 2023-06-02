@@ -185,6 +185,12 @@ struct TextEditorWrapper: UIViewControllerRepresentable {
             parent.textView.textAlignment = align
         }
         
+        func selected_textAlign(align: NSTextAlignment) {
+            let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = align
+            textEffect(type: NSParagraphStyle.self, key: .paragraphStyle, value: paragraphStyle, defaultValue: .default)
+        }
+        
         func adjustFontSize(isIncrease: Bool) {
             var font: UIFont
             
@@ -356,17 +362,26 @@ struct TextEditorWrapper: UIViewControllerRepresentable {
         }
         
         func textViewDidChange(_ textView: UITextView) {
+            var doDeals: [(()->Void)] = []
+            
             if textView.attributedText.string != parent.placeholder {
-                parent.richText = NSMutableAttributedString(attributedString: textView.attributedText)
+                doDeals.append { [weak textView] in
+                    guard let textView else {return }
+                    self.parent.richText = NSMutableAttributedString(attributedString: textView.attributedText)
+                }
             }
             let size = CGSize(width: parent.controller.view.frame.width, height: .infinity)
             let estimatedSize = textView.sizeThatFits(size)
             if parent.height != estimatedSize.height {
-                DispatchQueue.main.async {
+                doDeals.append { [weak textView] in
+                    guard let textView else {return }
                     self.parent.height = estimatedSize.height
                 }
             }
             textView.scrollRangeToVisible(textView.selectedRange)
+            DispatchQueue.main.async {
+                doDeals.forEach { $0() }
+            }
 
             //textView.contentInset = UIEdgeInsets(top: 0, left: textView.contentInset.left, bottom: 0, right: textView.contentInset.right)
         }
